@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="qoute-box">
+        <h2>Quote of the Day</h2>
+        <blockquote>"Be yourself; everyone else is already taken."</blockquote>
+        <span>Oscar Wilde</span>
+        <div>
+            <button>New Quote</button>
+        </div>
+    </div>
+    
+
+    <script>
+        const quoteText = document.querySelector('.qoute-box blockquote');
+        const authorName = document.querySelector('.qoute-box span');
+        const newQuoteBtn = document.querySelectorAll('.qoute-box button')[0];
+    
+        async function getQuote() {
+            quoteText.innerText = "Loading...";
+            authorName.innerText = "Loading...";
+    
+            try {
+                const response = await fetch('https://api.quotable.io/random?tags=wisdom|famous-quotes');
+                const data = await response.json();
+                quoteText.innerText = data.content;
+                authorName.innerText = data.author;
+            } catch (error) {
+                quoteText.innerText = "Failed to load quote.";
+                authorName.innerText = "";
+            }
+        }
+    
+        newQuoteBtn.addEventListener('click', getQuote);
+    
+        // Load initial quote
+        getQuote();
+    </script>
+    
+</body>
+</html>
